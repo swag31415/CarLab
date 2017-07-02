@@ -21,6 +21,10 @@ public class Car {
 		this.speed+=5;
 	}
 	
+	public void setSpeed(int x) {
+		this.speed = x;
+	}
+	
 	public void dec() {
 		this.speed-=1;
 	}
