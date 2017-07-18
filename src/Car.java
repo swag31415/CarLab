@@ -12,9 +12,9 @@ public class Car {
 		this.make = make;
 		this.model = model;
 		this.color = color;
-		setStarted(false);
+		isStarted = false;
 		isInUse = false;
-		setSpeed(0);
+		speed = 0;
 	}
 
 	/**
@@ -35,10 +35,10 @@ public class Car {
 	// ---------------------------------------------------------------------
 	public void acclerate() {
 		if (isStarted()) {
-			if (getSpeed() < 80) {
-				this.setSpeed(this.getSpeed() + 5);
-			} else if (getSpeed() < 85) {
-				this.setSpeed(85);
+			if (speed < 80) {
+				this.speed = speed + 5;
+			} else if (speed < 85) {
+				this.speed = 85;
 				System.out.println("You are now at the speed limit of 85 mph");
 			} else {
 				System.out.println("You are at the speed limit, it is not proper to go any faster");
@@ -50,8 +50,8 @@ public class Car {
 
 	public void declerate() {
 		if (isStarted()) {
-			if (getSpeed() > 0) {
-				this.setSpeed(this.getSpeed() - 1);
+			if (speed > 0) {
+				this.speed = speed - 1;
 			} else {
 				System.out.println("Sorry dude, but braking at 0mph is really dumb");
 			}
@@ -62,7 +62,7 @@ public class Car {
 
 	public void startCar() {
 		if (!isStarted()) {
-			this.setStarted(true);
+			this.isStarted = true;
 			System.out.println("You started your car!");
 		} else {
 			System.out.println("You may not start without stopping");
@@ -71,7 +71,7 @@ public class Car {
 
 	public void stopCar() {
 		if (isStarted()) {
-			this.setStarted(false);
+			this.isStarted=false;
 			System.out.println("You stopped your car!");
 		} else {
 			System.out.println("You may not stop without starting");
@@ -98,8 +98,8 @@ public class Car {
 	}
 
 	public void getStats() {
-		System.out.println("Model: " + model + "\nMake: " + make + "\nColor: " + color + "\nSpeed: " + getSpeed()
-				+ "\nis Started? : " + isStarted() + "\nis in use? : " + isInUse);
+		System.out.println("Model: " + model + "\nMake: " + make + "\nColor: " + color + "\nSpeed: " + speed
+				+ "\nis Started? : " + isStarted + "\nis in use? : " + isInUse);
 	}
 
 	private boolean isStarted() {
@@ -110,4 +110,38 @@ public class Car {
 	public String toString() {
 		return model;
 	}
+	
+	public class SportsCar extends Car{
+
+		public SportsCar(String make, String model, String color) {
+			super(make, model, color);
+		}
+		public void acclerate() {
+			if (isStarted) {
+				if (speed < 80) {
+					speed = speed + 8;
+				} else if (speed < 85) {
+					speed = 85;
+					System.out.println("You are now at the speed limit of 85 mph");
+				} else {
+					System.out.println("You are at the speed limit, it is not proper to go any faster");
+				}
+			}else {
+				System.out.println("Please first start your car");
+			}
+		}
+
+		public void declerate() {
+			if (isStarted) {
+				if (speed > 0) {
+					speed = speed - 5;
+				} else {
+					System.out.println("Sorry dude, but braking at 0mph is really dumb");
+				}
+			}else {
+				System.out.println("Please first start your car");
+			}
+		}
+
+	}	
 }
