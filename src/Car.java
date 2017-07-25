@@ -17,45 +17,37 @@ public class Car {
 		speed = 0;
 	}
 
-	/**
-	 * Business rules: your Car class is currently not enforcing any business
-	 * rules whatsoever. As a reminder, an example of a business rule would be:
-	 * the car's speed cannot go over 85 mph. TODO: Modify your functions to
-	 * follow business rules: A car's speed cannot be negative A car cannot
-	 * accelerate unless it's started (see note) A car cannot accelerate past 85
-	 * mph A car that's already started cannot be started again A car that's
-	 * already stopped cannot be stopped again
-	 *
-	 * I know that in some ways you feel that you are enforcing the 2nd rule
-	 * through the way your CLI works. But that's something you can enforce at
-	 * the class level.
-	 */
-
 	// <Basic car controls
 	// ---------------------------------------------------------------------
 	public void acclerate() {
-		if (isStarted()) {
-			if (speed < 80) {
-				this.speed = speed + 5;
-			} else if (speed < 85) {
-				this.speed = 85;
+		int acclerationUnit = 5;
+		int speedLimit = 85;
+		if (isStarted) {
+			if (speed < speedLimit - acclerationUnit) {
+				speed = speed + acclerationUnit;
+			} else if (speed < speedLimit) {
+				speed = speedLimit;
 				System.out.println("You are now at the speed limit of 85 mph");
 			} else {
 				System.out.println("You are at the speed limit, it is not proper to go any faster");
 			}
-		}else {
+		} else {
 			System.out.println("Please first start your car");
 		}
 	}
 
 	public void declerate() {
-		if (isStarted()) {
-			if (speed > 0) {
-				this.speed = speed - 1;
+		int declerationUnit = 1;
+		if (isStarted) {
+			if (speed >= declerationUnit) {
+				speed = speed - declerationUnit;
+			} else if (speed > 0) {
+				speed = 0;
+				System.out.println("You are now at 0mph!");
 			} else {
-				System.out.println("Sorry dude, but braking at 0mph is really dumb");
+				System.out.println("You are attempting to brake at 0mph, that's not right!");
 			}
-		}else {
+		} else {
 			System.out.println("Please first start your car");
 		}
 	}
@@ -71,7 +63,7 @@ public class Car {
 
 	public void stopCar() {
 		if (isStarted()) {
-			this.isStarted=false;
+			this.isStarted = false;
 			System.out.println("You stopped your car!");
 		} else {
 			System.out.println("You may not stop without starting");
@@ -110,6 +102,5 @@ public class Car {
 	public String toString() {
 		return model;
 	}
-	
 
 }

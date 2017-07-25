@@ -10,82 +10,91 @@ import java.util.Scanner;
 
 public class Main2 {
 
-	@SuppressWarnings("finally")// Java wanted this idk why
-	public static String userStringInput(String y) { //String input with decent error control
-		System.out.println(y);
-		String x = "";
+	@SuppressWarnings({ "finally", "resource" }) // Java wanted this idk why
+	public static String userStringInput(String userInputText) { // String input
+																	// with
+																	// decent
+																	// error
+																	// control
+		System.out.println(userInputText);
+		String returnValue = "";
 		try {
-		x = new Scanner(System.in).nextLine();
+			returnValue = new Scanner(System.in).nextLine();
 		} catch (NoSuchElementException ex) {
-			return userStringInput(y);
+			return userStringInput(userInputText);
 		} finally {
-		return x;
+			return returnValue;
 		}
 	}
-	public static boolean userYesNoInput(String y) { //Very likable boolean input
-		System.out.println(y);
-		boolean x = false;
-		String z = "";
+
+	@SuppressWarnings("resource")
+	public static boolean userYesNoInput(String userInputText) { // Very likable
+																	// boolean
+																	// input
+		System.out.println(userInputText);
+		boolean returnBoolean = false;
+		String userInput = "";
 		try {
-			z = new Scanner(System.in).next().toLowerCase();
-			if (z.contains("y")) {
-				x = true;
-			}else if (z.contains("n")) {
-				x = false;
+			userInput = new Scanner(System.in).next().toLowerCase();
+			if (userInput.contains("y")) {
+				returnBoolean = true;
+			} else if (userInput.contains("n")) {
+				returnBoolean = false;
 			} else {
 				System.out.println("Sorry but we wee expecting a yes or no answer, Please try again");
-				return userYesNoInput(y);
+				return userYesNoInput(userInputText);
 			}
 		} catch (NoSuchElementException ex) {
-			return userYesNoInput(y);
+			return userYesNoInput(userInputText);
 		}
-		return x;
+		return returnBoolean;
 	}
-	
-	
-	@SuppressWarnings("resource")// Java wanted this idk why
-	public static int userIntInput(String y) { // Int input with decent error control
-		System.out.println(y);
-		int x = 0;
+
+	@SuppressWarnings("resource") // Java wanted this idk why
+	public static int userIntInput(String userInputText) { // Int input with
+															// decent error
+															// control
+		System.out.println(userInputText);
+		int returnInt = 0;
 		try {
-			x = new Scanner(System.in).nextInt();
+			returnInt = new Scanner(System.in).nextInt();
 		} catch (InputMismatchException ex) {
 			System.out.println("Sorry we want numerical input, please try again");
-			return userIntInput(y);
+			return userIntInput(userInputText);
 		}
-		return x;
-	}//Implemented the try/catch thing
-	
-	
-	public static void main(String args[]) {//the actual main
-		List<Car> carList = new ArrayList<Car>();//making the carList or "garage"
-		
+		return returnInt;
+	}// Implemented the try/catch thing
+
+	public static void main(String args[]) {// the actual main
+		List<Car> carList = new ArrayList<Car>();// making the carList or
+													// "garage"
+
 		int numOfCars = userIntInput("How many cars do you own?");
-		
-		for (int x = 1; x <= numOfCars; x++) {//getting details on all the cars
-			
+
+		for (int x = 1; x <= numOfCars; x++) {// getting details on all the cars
+
 			String make = userStringInput("Please provide a make for car " + x);
 			String model = userStringInput("Please provide a model for car " + x);
 			String color = userStringInput("Please provide a color for car " + x);
 			boolean isSportsCar = userYesNoInput("Is this car a sportscar?");
-			if (isSportsCar) { 
+			if (isSportsCar) {
 				carList.add(new SportsCar(make, model, color));
 			} else {
-			carList.add(new Car(make, model, color));
+				carList.add(new Car(make, model, color));
 			}
 			System.out.println("Good job we did car " + x);
 		}
-		
+
 		while (true) { // beginning to actually do things to cars
-			//Getting some info out
+			// Getting some info out
 			System.out.println("Here are your cars! please choose a car to use \n(Type the number of the position)");
 			System.out.println(carList);
-			//getting the car in use
+			// getting the car in use
 			int carChosenIndex = userIntInput("");
 			Car carChosen = carList.get(carChosenIndex - 1);
 			carChosen.setInUse();
-			
-			//staring the car usage experience
+
+			// starting the car usage experience
 			System.out.println("Yay! here are the current stats of your car");
 			carChosen.getStats();
 			System.out.println("You can now try to start, stop, accelerate, decelrate, or get the stats of your car");
@@ -97,7 +106,7 @@ public class Main2 {
 				} else if (userCommand.equals("stop")) {
 					carChosen.stopCar();
 					boolean willUse = userYesNoInput("Would you like to keep using this car? (y/n)");
-					if (!willUse){
+					if (!willUse) {
 						carChosen.setNotInUse();// Stops the while here
 					}
 				} else if (userCommand.equals("acc")) {
